@@ -1,11 +1,12 @@
 ---
 output:
-  html_document:
-    toc: yes
   pdf_document:
     latex_engine: xelatex
     number_sections: yes
     toc: yes
+  html_document:
+    toc: yes
+  word_document: default
 ---
 # Exponential distribution Compare with the Central Limit Theorem
 
