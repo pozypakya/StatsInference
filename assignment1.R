@@ -17,48 +17,48 @@ library(knitr)
 
           lambda = 0.2
           n = 40 
-          nosim = 1000
+          sim = 1000
 
           set.seed(349)
 
 #############################################################################################################################################
 
-          exp_sim <- function(n, lambda)
+          exponen_simulation <- function(n, lambda)
             {
                       mean(rexp(n,lambda))
             }
 
 ##########################################################################################################
        
-        sim <- data.frame(ncol=2,nrow=1000)
-        names(sim) <- c("Index","Mean")
+        simData <- data.frame(ncol=2,nrow=1000)
+        names(simData) <- c("Index","Mean")
 
-              for (i in 1:nosim)
+              for (i in 1:sim)
                 {
-                          sim[i,1] <- i
-                          sim[i,2] <- exp_sim(n,lambda)
+                          simData[i,1] <- i
+                          simData[i,2] <- exponen_simulation(n,lambda)
                 }
 
 #########################################################################################################
 ## mean of n = 1000
 
-        sample_mean <- mean(sim$Mean)
+        sample_mean <- mean(simData$Mean)
         sample_mean
 
 ## Theoretical exponential mean of exponential distribution
         
-        theor_mean <- 1/lambda
-        theor_mean
+        theoritical_mean <- 1/lambda
+        theoritical_mean
 
 #########################################################################################################
 ##          
 
-          hist(sim$Mean, 
+          hist(simData$Mean, 
                  breaks=100, 
                  prob=TRUE, 
                  main="Exponential Distribution n = 1000", 
                  xlab="Spread")
-                        abline(v = theor_mean, 
+                        abline(v = theoritical_mean, 
                                 col= 3,
                                 lwd = 2)
                         abline(v = sample_mean, 
@@ -72,39 +72,39 @@ library(knitr)
 
 ############################################################################################################################################  
 
-              sample_var <- var(sim$Mean)
+              sample_var <- var(simData$Mean)
               theor_var <- ((1/lambda)^2)/40
 
 ##############################################################################################################################################
 
-          hist(sim$Mean, 
+          hist(simData$Mean, 
                         breaks = 100, 
                         prob = TRUE, 
                         main ="Exponential Distribution n = 1000", 
                         xlab ="Spread")
-                        xfit <- seq(min(sim$Mean), max(sim$Mean), length = 100)
+                        xfit <- seq(min(simData$Mean), max(simData$Mean), length = 100)
                         yfit <- dnorm(xfit, mean = 1/lambda, sd = (1/lambda/sqrt(40)))
                         lines(xfit, yfit, pch=22, col = 3, lwd=2)
                         legend('topright', c("Theoretical Curve"), lty=1,lwd=2, col=3)
 
 ###############################################################################################################################################
 
-          hist(sim$Mean, 
+          hist(simData$Mean, 
                         breaks = 100, 
                         prob = TRUE, 
                         main = "Distribution of Simulated Exponential Distribution", xlab="")
-                        lines(density(sim$Mean))
+                        lines(density(simData$Mean))
                         abline(v = 1/lambda, col = 3)
-                        xfit <- seq(min(sim$Mean), max(sim$Mean), length = 100)
+                        xfit <- seq(min(simData$Mean), max(simData$Mean), length = 100)
                         yfit <- dnorm(xfit, mean = 1/lambda, sd = (1/lambda/sqrt(40)))
                         lines(xfit, yfit, pch=22, col="red", lty=2)
                         legend('topright', c("Simulated Values", "Theoretical Values"), lty=c(1,2), col=c("black", "red"))
 
 ###################################################################################################################################################
 
-            qqnorm(sim$Mean, 
+            qqnorm(simData$Mean, 
                             main="Normal Q-Q Plot")
-                            qqline(sim$Mean, 
+                            qqline(simData$Mean, 
                             col="3")
 
 ####################################################################################################################################################
