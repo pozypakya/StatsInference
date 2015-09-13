@@ -109,8 +109,8 @@ library(knitr)
 
 ####################################################################################################################################################
 
-setwd("/Users/WestYani/Documents/Classes/John\ Hopkins/Data\ Science\ /Statistical\ Inference")
-knit2html("project1.rmd", "project1.html")
+setwd("D:/Google Drive/Coursera/Assignment 6.1/codes/StatsInference")
+knit2html("assignment1.rmd", "assignment1.html")
 opts_knit$set(base.dir = 'figure')
 
 #####################################################################################################################################################

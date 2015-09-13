@@ -1,0 +1,91 @@
+---
+output: pdf_document
+---
+# ToothGrowth Analysis
+
+* Load the ToothGrowth data and perform some basic exploratory data analyses 
+```{r}
+suppressMessages(library(datasets))
+suppressMessages(library(ggplot2))
+suppressMessages(library(dplyr))
+data(ToothGrowth)
+str(ToothGrowth)
+```
+
+```{r}
+ToothGrowth
+```
+
+Length of ToothGrowth$len 
+```{r}
+length(ToothGrowth$len)
+```
+
+
+Mean of ToothGrowth Dataset
+```{r}
+aggregate(ToothGrowth$len,list(ToothGrowth$supp,ToothGrowth$dose),mean)
+```
+
+Standard Deviation of ToothGrowth Dataset
+```{r}
+aggregate(ToothGrowth$len,list(ToothGrowth$supp,ToothGrowth$dose),sd)
+```
+
+BoxPlot of the quantile
+```{r}
+    ggplot(ToothGrowth, aes(x = factor(dose), y = len, fill = factor(dose)))+
+                  geom_boxplot()+
+                  facet_grid(.~supp)+
+                  labs(title = "Tooth Length vs. OJ & VC type Dose",
+                  x = "Doses #", y = "Tooth Length") 
+
+```
+
+* Provide a basic summary of the data.
+
+```{r}
+summary(ToothGrowth)
+```
+
+* Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose. (Only use the techniques from class, even if there's other approaches worth considering)
+
+If we refer to the box plot , OJ seems better with 0.5 dose and 1 which effects on the teeth growth than VC. We can assume by making hypothesis that mean of OJ and VC will not more than 0
+
+<b>a) 0.5 Dose</b><br>
+
+With 0.95% confident rate , the boundary of from <b>1.719057</b> and <b>8.780943</b> contains the difference between the two population. Because of the boundary does not have 0 value , the possibility that the two population means are <b style="color:red">not equal</b>.
+
+```{r}
+oj_dose95 <- ToothGrowth %>% filter(dose=="0.5" & supp=="OJ")
+vc_dose95 <- ToothGrowth %>% filter(dose=="0.5" & supp=="VC")
+t.test(oj_dose95$len,vc_dose95$len)
+
+```
+
+<b>b) 1 Dose</b><br>
+
+With 0.95% confident rate , the boundary of from <b>2.802148</b> and <b>9.057852</b> contains the difference between the two population. Because of the boundary does not have 0 value , the possibility that the two population means are <b style="color:red">not equal</b>.
+
+```{r}
+oj_dose95 <- ToothGrowth %>% filter(dose=="1" & supp=="OJ")
+vc_dose95 <- ToothGrowth %>% filter(dose=="1" & supp=="VC")
+t.test(oj_dose95$len,vc_dose95$len)
+```
+
+<b>c) 2 Dose</b><br>
+
+With 0.95% confident rate , the boundary of from <b>-3.79807</b> and <b>3.63807</b> contains the difference between the two population. Because of the boundary does not have 0 value , the possibility that the two population means <b style="color:green">are equal</b>.
+
+```{r}
+oj_dose95 <- ToothGrowth %>% filter(dose=="2" & supp=="OJ")
+vc_dose95 <- ToothGrowth %>% filter(dose=="2" & supp=="VC")
+t.test(oj_dose95$len,vc_dose95$len)
+```
+
+* State your conclusions and the assumptions needed for your conclusions. 
+
+We can conclude that With 95% rate confident , OJ dose with 0.5 and 1  will have <b style="color:green">longer tooth length </b> than VC with the same 0.5 and 1 dose. 
+We also can assume with the dose of 2 , there is <b style="color:red">no significant different</b> effects between for both OV and VC.
+
+
